@@ -6,4 +6,6 @@
     <string name="configurar">Setting</string>
     <string name="salir">Exit</string>
     <string name="asteroides">ASTEROIDS</string>
+    <string name="boton">Custom Button</string>
+    <string name="calculadora">Calculator</string>
 </resources>

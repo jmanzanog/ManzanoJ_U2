@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class Tab3 extends Fragment {
     @Override
@@ -16,4 +17,6 @@ public class Tab3 extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab3, container, false);
     }
+
+
 }
