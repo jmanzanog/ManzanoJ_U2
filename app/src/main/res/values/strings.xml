@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AsteroidesUPV</string>
+    <string name="acerca_de">Acerca de</string>
+    <string name="jugar">Jugar</string>
+    <string name="configurar">Configurar</string>
+    <string name="salir">Salir</string>
+    <string name="asteroides">ASTEROIDES</string>
+</resources>
