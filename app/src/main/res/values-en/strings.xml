@@ -8,4 +8,6 @@
     <string name="asteroides">ASTEROIDS</string>
     <string name="boton">Custom Button</string>
     <string name="calculadora">Calculator</string>
+    <string name="titulo">Layout Constraint Calculator</string>
+
 </resources>

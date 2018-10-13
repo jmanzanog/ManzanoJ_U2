@@ -8,24 +8,24 @@
     <string name="boton">Botón Personalizado</string>
     <string name="calculadora">Calculadora</string>
 
-    <string name="one" translatable="false">1</string>
-    <string name="four" translatable="false">4</string>
-    <string name="six" translatable="false">6</string>
-    <string name="seven" translatable="false">7</string>
-    <string name="eight" translatable="false">8</string>
-    <string name="nine" translatable="false">9</string>
-    <string name="zero" translatable="false">0</string>
-    <string name="two" translatable="false">2</string>
-    <string name="three" translatable="false">3</string>
-    <string name="five" translatable="false">5</string>
-    <string name="zero_point_zero" translatable="false">0.0</string>
-    <string name="dot" translatable="false">.</string>
+    <string name="uno" translatable="false">1</string>
+    <string name="cuatro" translatable="false">4</string>
+    <string name="seis" translatable="false">6</string>
+    <string name="siete" translatable="false">7</string>
+    <string name="ocho" translatable="false">8</string>
+    <string name="nueve" translatable="false">9</string>
+    <string name="cero" translatable="false">0</string>
+    <string name="dos" translatable="false">2</string>
+    <string name="tres" translatable="false">3</string>
+    <string name="cinco" translatable="false">5</string>
+    <string name="cero_punto_cero" translatable="false">0.0</string>
+    <string name="punto" translatable="false">.</string>
     <string name="divide" translatable="false">÷</string>
-    <string name="multiply" translatable="false">×</string>
-    <string name="add" translatable="false">+</string>
-    <string name="equals" translatable="false">=</string>
-    <string name="subtract" translatable="false">−</string>
+    <string name="multiplica" translatable="false">×</string>
+    <string name="suma" translatable="false">+</string>
+    <string name="igual" translatable="false">=</string>
+    <string name="menos" translatable="false">−</string>
 
-    <string name="advanced_chains" translatable="false">Advanced Chains</string>
+    <string name="titulo">Calculadora Layout Constraint</string>
 
 </resources>
