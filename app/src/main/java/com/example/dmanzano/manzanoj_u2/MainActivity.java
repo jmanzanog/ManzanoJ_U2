@@ -14,7 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,12 +27,15 @@ public class MainActivity extends AppCompatActivity {
     private Button bconfig;
     private Button bjugar;
     public static AlmacenPuntuaciones almacen= new AlmacenPuntuacionesList();
+    private TextView textView;
+    private Animation animation, animation1, animation2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
         bSalir = findViewById(R.id.button4);
         bconfig = findViewById(R.id.button2);
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         bjugar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 mostrarPreferencias(null);
+                lanzarJuego(null);
             }
         });
         bAcercaDe.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
                // finish();
             }
         });
+        animation = AnimationUtils.loadAnimation(this, R.anim.giro_con_zoom);
+        animation1 = AnimationUtils.loadAnimation(this, R.anim.aparecer);
+        animation2 = AnimationUtils.loadAnimation(this, R.anim.desplazamiento_derecha);
+
+        bjugar.startAnimation(animation1);
+        bconfig.startAnimation(animation2);
+
+
+
 
     }
 
@@ -66,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lanzarAcercaDe(View view) {
+        textView.startAnimation(animation);
         Intent i = new Intent(this, AcercaDeActivity.class);
         startActivity(i);
     }
@@ -105,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void lanzarPuntuaciones(View view) {
         Intent i = new Intent(this, Puntuaciones.class);
+        startActivity(i);
+    }
+
+    public void lanzarJuego(View view) {
+        Intent i = new Intent(this, Juego.class);
         startActivity(i);
     }
 

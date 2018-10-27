@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="tiposGraficos">
-        <item>vectorial</item>
-        <item>bitmap</item>
-        <item>3D</item>
+        <item>Vectorial</item>
+        <item>Bitmap</item>
+        <item>VectorDrawable</item>
     </string-array>
     <string-array name="tiposGraficosValores">
         <item>0</item>

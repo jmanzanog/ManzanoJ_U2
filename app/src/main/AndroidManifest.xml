@@ -23,6 +23,7 @@
         <activity android:name=".AcercaDeActivity" android:label="@string/acerca_de" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".PreferenciasActivity" android:label="@string/configurar" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Puntuaciones" android:label="@string/salir"/>
+        <activity android:name=".Juego" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
     </application>
 
 </manifest>
