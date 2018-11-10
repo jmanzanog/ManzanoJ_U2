@@ -3,6 +3,7 @@ package com.example.dmanzano.manzanoj_u2;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static AlmacenPuntuaciones almacen= new AlmacenPuntuacionesList();
     private TextView textView;
     private Animation animation, animation1, animation2;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         bjugar.startAnimation(animation1);
         bconfig.startAnimation(animation2);
 
-
+        mp = MediaPlayer.create(this, R.raw.audio); mp.start();
 
 
     }
@@ -128,6 +130,35 @@ public class MainActivity extends AppCompatActivity {
     public void lanzarJuego(View view) {
         Intent i = new Intent(this, Juego.class);
         startActivity(i);
+    }
+
+
+    @Override protected void onPause() {
+        mp.pause();
+        super.onPause();
+    }
+    @Override protected void onResume() {
+        super.onResume();
+        mp.start();
+    }
+    @Override protected void onDestroy() {
+        mp.stop();
+        super.onDestroy();
+    }
+
+    @Override protected void onSaveInstanceState(Bundle estadoGuardado){
+        super.onSaveInstanceState(estadoGuardado);
+        if (mp != null) {
+            int pos = mp.getCurrentPosition();
+            estadoGuardado.putInt("posicion", pos);
+        }
+    }
+    @Override protected void onRestoreInstanceState(Bundle estadoGuardado){
+        super.onRestoreInstanceState(estadoGuardado);
+        if (estadoGuardado != null && mp != null) {
+            int pos = estadoGuardado.getInt("posicion");
+            mp.seekTo(pos);
+        }
     }
 
 }
