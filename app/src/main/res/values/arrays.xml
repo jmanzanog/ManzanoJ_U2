@@ -5,7 +5,18 @@
         <item>Bitmap</item>
         <item>VectorDrawable</item>
     </string-array>
+
+    <string-array name="tiposSensores">
+        <item>Orientación</item>
+        <item>Aceleración</item>
+        <item>Default Solo pantalla tactil</item>
+    </string-array>
     <string-array name="tiposGraficosValores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="tiposSensorValores">
         <item>0</item>
         <item>1</item>
         <item>2</item>

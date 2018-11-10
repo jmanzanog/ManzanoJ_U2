@@ -12,6 +12,15 @@
         android:key="graficos"
         android:summary="Se escoge la representación de gráficos"
         android:title="Tipo de gráficos" />
+
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/tiposSensores"
+        android:entryValues="@array/tiposSensorValores"
+        android:key="sensores"
+        android:summary="Se escoge el tipo de sensor"
+        android:title="Tipo de sensores" />
+
     <EditTextPreference
         android:defaultValue="3"
         android:inputType="number"

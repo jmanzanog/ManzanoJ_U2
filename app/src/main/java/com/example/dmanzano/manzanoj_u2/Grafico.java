@@ -165,4 +165,7 @@ class Grafico {
     public void setView(View view) {
         this.view = view;
     }
+
+    public void dibujarGrafico(Canvas canvas) {
+    }
 }
