@@ -1,6 +1,8 @@
 package com.example.dmanzano.manzanoj_u2;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -40,7 +43,7 @@ public class VistaJuego extends View implements SensorEventListener {
     private static final int PASO_GIRO_NAVE = 5;
     private static final float PASO_ACELERACION_NAVE = 0.5f;
     private MediaPlayer mpDisparo, mpExplosion;
-
+    private int puntuacion = 0;
 
 
     // //// MISIL //////
@@ -63,17 +66,18 @@ public class VistaJuego extends View implements SensorEventListener {
     private SharedPreferences pref;
 
 
-
     // //// MULTIMEDIA //////
     SoundPool soundPool;
     int idDisparo, idExplosion;
+
+    private Activity padre;
 
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
         Drawable drawableNave = null, drawableAsteroide = null, drawableMisil = null;
         // drawableAsteroide = ContextCompat.getDrawable(context, R.drawable.asteroide1);
-         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (pref.getString("graficos", "1").equals("0")) {
 
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -153,20 +157,21 @@ public class VistaJuego extends View implements SensorEventListener {
 
         if (pref.getString("sensores", "2").equals("0")) {
             //Sensor orientación
-             mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+            mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             List<Sensor> listSensors = mSensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
             if (!listSensors.isEmpty()) {
-                 sensor = listSensors.get(0);
+                sensor = listSensors.get(0);
                 mSensorManager.registerListener(this, sensor,
                         SensorManager.SENSOR_DELAY_GAME);
             }
 
-        }if (pref.getString("sensores", "2").equals("1")) {
+        }
+        if (pref.getString("sensores", "2").equals("1")) {
             //Sensor aceleracion
-             mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+            mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             List<Sensor> listSensors = mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
             if (!listSensors.isEmpty()) {
-                 sensor = listSensors.get(0);
+                sensor = listSensors.get(0);
                 mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
             }
 
@@ -175,7 +180,7 @@ public class VistaJuego extends View implements SensorEventListener {
         mpDisparo = MediaPlayer.create(context, R.raw.disparo);
         mpExplosion = MediaPlayer.create(context, R.raw.explosion);
 
-        soundPool = new SoundPool( 5, AudioManager.STREAM_MUSIC , 0);
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
         idDisparo = soundPool.load(context, R.raw.disparo, 0);
         idExplosion = soundPool.load(context, R.raw.explosion, 0);
     }
@@ -237,7 +242,7 @@ public class VistaJuego extends View implements SensorEventListener {
         // Actualizamos posición de misil
         if (misilActivo) {
             misil.incrementaPos(factorMov);
-            tiempoMisil-=factorMov;
+            tiempoMisil -= factorMov;
             if (tiempoMisil < 0) {
                 misilActivo = false;
             } else {
@@ -246,6 +251,11 @@ public class VistaJuego extends View implements SensorEventListener {
                         destruyeAsteroide(i);
                         break;
                     }
+            }
+        }
+        for (Grafico asteroide : asteroides) {
+            if (asteroide.verificaColision(nave)) {
+                salir();
             }
         }
     }
@@ -290,6 +300,7 @@ public class VistaJuego extends View implements SensorEventListener {
     public ThreadJuego getThread() {
         return thread;
     }
+
     @Override
     public boolean onKeyDown(int codigoTecla, KeyEvent evento) {
         super.onKeyDown(codigoTecla, evento);
@@ -366,7 +377,7 @@ public class VistaJuego extends View implements SensorEventListener {
                 giroNave = 0;
                 aceleracionNave = 0;
                 if (disparo) {
-                   activaMisil();
+                    activaMisil();
                 }
                 break;
         }
@@ -407,36 +418,54 @@ public class VistaJuego extends View implements SensorEventListener {
 
 
     }
+
     private void destruyeAsteroide(int i) {
         asteroides.remove(i);
         misilActivo = false;
         this.postInvalidate();
         //mpExplosion.start();
         soundPool.play(idExplosion, 1, 1, 0, 0, 1);
+        puntuacion += 1000;
+        if (asteroides.isEmpty()) {
+            salir();
+        }
     }
+
     private void activaMisil() {
         misil.setCenX(nave.getCenX());
         misil.setCenY(nave.getCenY());
         misil.setAngulo(nave.getAngulo());
         misil.setIncX(Math.cos(Math.toRadians(misil.getAngulo())) * PASO_VELOCIDAD_MISIL);
         misil.setIncY(Math.sin(Math.toRadians(misil.getAngulo())) * PASO_VELOCIDAD_MISIL);
-        tiempoMisil = (int) Math.min(this.getWidth() / Math.abs( misil. getIncX()), this.getHeight() / Math.abs(misil.getIncY())) - 2;
+        tiempoMisil = (int) Math.min(this.getWidth() / Math.abs(misil.getIncX()), this.getHeight() / Math.abs(misil.getIncY())) - 2;
         misilActivo = true;
-       // mpDisparo.start();
+        // mpDisparo.start();
         soundPool.play(idDisparo, 1, 1, 1, 0, 1);
 
     }
 
-    public void activarSensores(){
-        if (!(pref.getString("sensores", "2").equals("2"))){
+    public void activarSensores() {
+        if (!(pref.getString("sensores", "2").equals("2"))) {
             mSensorManager.registerListener(this, sensor,
                     SensorManager.SENSOR_DELAY_GAME);
         }
 
     }
-    public void desactivarSensores(){
+
+    public void desactivarSensores() {
         mSensorManager.unregisterListener(this);
     }
 
+    public void setPadre(Activity padre) {
+        this.padre = padre;
+    }
 
+    private void salir() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("puntuacion", puntuacion);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        padre.setResult(Activity.RESULT_OK, intent);
+        padre.finish();
+    }
 }

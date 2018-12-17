@@ -9,6 +9,7 @@ public class Juego extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.juego);
         vistaJuego = findViewById(R.id.VistaJuego);
+        vistaJuego.setPadre(this);
     }
 
     @Override protected void onPause() {

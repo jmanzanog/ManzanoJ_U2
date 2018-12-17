@@ -27,16 +27,17 @@ public class MainActivity extends AppCompatActivity {
     private Button bSalir;
     private Button bconfig;
     private Button bjugar;
-    public static AlmacenPuntuaciones almacen= new AlmacenPuntuacionesList();
+    public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesList();
     private TextView textView;
     private Animation animation, animation1, animation2;
     private MediaPlayer mp;
+    static final int ACTIV_JUEGO = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        almacen = new AlmacenPuntuacionesFicheroInterno(this);
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
         bSalir = findViewById(R.id.button4);
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         bSalir.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 lanzarPuntuaciones(null);
-               // finish();
+                // finish();
             }
         });
         animation = AnimationUtils.loadAnimation(this, R.anim.giro_con_zoom);
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         bjugar.startAnimation(animation1);
         bconfig.startAnimation(animation2);
 
-        mp = MediaPlayer.create(this, R.raw.audio); mp.start();
+        mp = MediaPlayer.create(this, R.raw.audio);
+        mp.start();
 
 
     }
@@ -129,35 +131,56 @@ public class MainActivity extends AppCompatActivity {
 
     public void lanzarJuego(View view) {
         Intent i = new Intent(this, Juego.class);
-        startActivity(i);
+        startActivityForResult(i, ACTIV_JUEGO);
     }
 
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         mp.pause();
         super.onPause();
     }
-    @Override protected void onResume() {
+
+    @Override
+    protected void onResume() {
         super.onResume();
         mp.start();
     }
-    @Override protected void onDestroy() {
+
+    @Override
+    protected void onDestroy() {
         mp.stop();
         super.onDestroy();
     }
 
-    @Override protected void onSaveInstanceState(Bundle estadoGuardado){
+    @Override
+    protected void onSaveInstanceState(Bundle estadoGuardado) {
         super.onSaveInstanceState(estadoGuardado);
         if (mp != null) {
             int pos = mp.getCurrentPosition();
             estadoGuardado.putInt("posicion", pos);
         }
     }
-    @Override protected void onRestoreInstanceState(Bundle estadoGuardado){
+
+    @Override
+    protected void onRestoreInstanceState(Bundle estadoGuardado) {
         super.onRestoreInstanceState(estadoGuardado);
         if (estadoGuardado != null && mp != null) {
             int pos = estadoGuardado.getInt("posicion");
             mp.seekTo(pos);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIV_JUEGO && resultCode == RESULT_OK && data != null) {
+            int puntuacion = data.getExtras().getInt("puntuacion");
+            String nombre = "Yo";
+// Mejor leer nombre desde un AlertDialog.Builder o preferencias
+            almacen.guardarPuntuacion(puntuacion, nombre,
+                    System.currentTimeMillis());
+            lanzarPuntuaciones(null);
         }
     }
 
