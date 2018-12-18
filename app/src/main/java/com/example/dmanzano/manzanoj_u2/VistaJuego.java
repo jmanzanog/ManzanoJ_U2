@@ -29,6 +29,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class VistaJuego extends View implements SensorEventListener {
     // //// ASTEROIDES //////
@@ -453,7 +454,12 @@ public class VistaJuego extends View implements SensorEventListener {
     }
 
     public void desactivarSensores() {
-        mSensorManager.unregisterListener(this);
+        try {
+            mSensorManager.unregisterListener(this);
+
+        } catch (Exception e){
+
+        }
     }
 
     public void setPadre(Activity padre) {

@@ -27,17 +27,29 @@ public class MainActivity extends AppCompatActivity {
     private Button bSalir;
     private Button bconfig;
     private Button bjugar;
-    public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesList();
+    public static AlmacenPuntuaciones almacen;
     private TextView textView;
     private Animation animation, animation1, animation2;
     private MediaPlayer mp;
     static final int ACTIV_JUEGO = 0;
+    private SharedPreferences pref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        almacen = new AlmacenPuntuacionesFicheroInterno(this);
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (pref.getString("puntuaciones", "1").equals("0")) {
+            almacen= new AlmacenPuntuacionesList();
+        }
+        if (pref.getString("puntuaciones", "1").equals("1")) {
+            almacen = new AlmacenPuntuacionesPreferencias(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("2")) {
+            almacen = new AlmacenPuntuacionesFicheroInterno(this);
+
+        }
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
         bSalir = findViewById(R.id.button4);
