@@ -1,13 +1,16 @@
 package com.example.dmanzano.manzanoj_u2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     static final int ACTIV_JUEGO = 0;
     private SharedPreferences pref;
 
+    private String[] PERMISSIONS = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
         }
         if (pref.getString("puntuaciones", "1").equals("2")) {
             almacen = new AlmacenPuntuacionesFicheroInterno(this);
+
+        }
+        if (pref.getString("puntuaciones", "1").equals("3")) {
+            if(!hasPermissions(this, PERMISSIONS)){
+                ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
+            }
+            almacen = new AlmacenPuntuacionesFicheroExterno(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("4")) {
+
+            almacen = new AlmacenPuntuacionesFicheroExtApl(this);
 
         }
         textView = (TextView) findViewById(R.id.textView2);
@@ -154,7 +172,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (pref.getString("puntuaciones", "1").equals("3")) {
+            if(!hasPermissions(this, PERMISSIONS)){
+                ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
+            }
             almacen = new AlmacenPuntuacionesFicheroExterno(this);
+
+        }
+        if (pref.getString("puntuaciones", "1").equals("4")) {
+
+            almacen = new AlmacenPuntuacionesFicheroExtApl(this);
 
         }
         Intent i = new Intent(this, Juego.class);
@@ -210,5 +236,14 @@ public class MainActivity extends AppCompatActivity {
             lanzarPuntuaciones(null);
         }
     }
-
+    public  boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
