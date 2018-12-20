@@ -142,6 +142,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lanzarJuego(View view) {
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (pref.getString("puntuaciones", "1").equals("0")) {
+            almacen= new AlmacenPuntuacionesList();
+        }
+        if (pref.getString("puntuaciones", "1").equals("1")) {
+            almacen = new AlmacenPuntuacionesPreferencias(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("2")) {
+            almacen = new AlmacenPuntuacionesFicheroInterno(this);
+
+        }
+        if (pref.getString("puntuaciones", "1").equals("3")) {
+            almacen = new AlmacenPuntuacionesFicheroExterno(this);
+
+        }
         Intent i = new Intent(this, Juego.class);
         startActivityForResult(i, ACTIV_JUEGO);
     }
