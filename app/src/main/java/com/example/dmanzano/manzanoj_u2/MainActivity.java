@@ -66,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
         if (pref.getString("puntuaciones", "1").equals("4")) {
 
             almacen = new AlmacenPuntuacionesFicheroExtApl(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("5")) {
 
+            almacen = new AlmacenPuntuacionesXML_SAX(this);
         }
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
@@ -182,6 +185,10 @@ public class MainActivity extends AppCompatActivity {
 
             almacen = new AlmacenPuntuacionesFicheroExtApl(this);
 
+        }
+        if (pref.getString("puntuaciones", "1").equals("5")) {
+
+            almacen = new AlmacenPuntuacionesXML_SAX(this);
         }
         Intent i = new Intent(this, Juego.class);
         startActivityForResult(i, ACTIV_JUEGO);

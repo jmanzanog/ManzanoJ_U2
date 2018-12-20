@@ -6,6 +6,7 @@
         <item>Fichero en memoria interna</item>
         <item>Fichero en memoria externa</item>
         <item>Fichero en memoria externa apl</item>
+        <item>Fichero XML_SAX</item>
     </string-array>
 
     <string-array name="tiposGraficos">
@@ -30,6 +31,7 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
     </string-array>
     <string-array name="tiposSensorValores">
         <item>0</item>
