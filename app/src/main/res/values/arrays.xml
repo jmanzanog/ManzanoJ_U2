@@ -10,6 +10,7 @@
         <item>Fichero GSON</item>
         <item>Fichero JSON</item>
         <item>Fichero SQLITE</item>
+        <item>Fichero SQLiteRel</item>
 
     </string-array>
 
@@ -39,6 +40,7 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
 
     </string-array>
     <string-array name="tiposSensorValores">
