@@ -7,6 +7,10 @@
         <item>Fichero en memoria externa</item>
         <item>Fichero en memoria externa apl</item>
         <item>Fichero XML_SAX</item>
+        <item>Fichero GSON</item>
+        <item>Fichero JSON</item>
+        <item>Fichero SQLITE</item>
+
     </string-array>
 
     <string-array name="tiposGraficos">
@@ -32,6 +36,10 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+
     </string-array>
     <string-array name="tiposSensorValores">
         <item>0</item>

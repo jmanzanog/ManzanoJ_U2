@@ -28,7 +28,7 @@ public class AlmacenPuntuacionesFicheroExtApl implements AlmacenPuntuaciones {
             Toast.makeText(context, "No puedo escribir en la memoria externa", Toast.LENGTH_LONG).show();
             return;
         }*/
-        String FICHERO = context.getExternalFilesDir(null).getAbsolutePath()+"/puntuacionesAPL.txt";
+        String FICHERO = context.getExternalFilesDir(null).getAbsolutePath() + "/puntuacionesAPL.txt";
 
         try {
             FileOutputStream f = new FileOutputStream(FICHERO, true);
@@ -48,7 +48,7 @@ public class AlmacenPuntuacionesFicheroExtApl implements AlmacenPuntuaciones {
         }*/
         List<String> result = new ArrayList<String>();
         try {
-            String FICHERO = context.getExternalFilesDir(null).getAbsolutePath()+"/puntuacionesAPL.txt";
+            String FICHERO = context.getExternalFilesDir(null).getAbsolutePath() + "/puntuacionesAPL.txt";
             FileInputStream f = new FileInputStream(FICHERO);
             BufferedReader entrada = new BufferedReader(
                     new InputStreamReader(f));

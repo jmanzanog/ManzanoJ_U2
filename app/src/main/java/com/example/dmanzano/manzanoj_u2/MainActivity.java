@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         if (pref.getString("puntuaciones", "1").equals("0")) {
-            almacen= new AlmacenPuntuacionesList();
+            almacen = new AlmacenPuntuacionesList();
         }
         if (pref.getString("puntuaciones", "1").equals("1")) {
             almacen = new AlmacenPuntuacionesPreferencias(this);
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (pref.getString("puntuaciones", "1").equals("3")) {
-            if(!hasPermissions(this, PERMISSIONS)){
+            if (!hasPermissions(this, PERMISSIONS)) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
             }
             almacen = new AlmacenPuntuacionesFicheroExterno(this);
@@ -70,6 +70,18 @@ public class MainActivity extends AppCompatActivity {
         if (pref.getString("puntuaciones", "1").equals("5")) {
 
             almacen = new AlmacenPuntuacionesXML_SAX(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("6")) {
+
+            almacen = new AlmacenPuntuacionesGSon(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("7")) {
+
+            almacen = new AlmacenPuntuacionesJSon(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("8")) {
+
+            almacen = new AlmacenPuntuacionesSQLite(this);
         }
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
@@ -165,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     public void lanzarJuego(View view) {
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         if (pref.getString("puntuaciones", "1").equals("0")) {
-            almacen= new AlmacenPuntuacionesList();
+            almacen = new AlmacenPuntuacionesList();
         }
         if (pref.getString("puntuaciones", "1").equals("1")) {
             almacen = new AlmacenPuntuacionesPreferencias(this);
@@ -175,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (pref.getString("puntuaciones", "1").equals("3")) {
-            if(!hasPermissions(this, PERMISSIONS)){
+            if (!hasPermissions(this, PERMISSIONS)) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
             }
             almacen = new AlmacenPuntuacionesFicheroExterno(this);
@@ -189,6 +201,18 @@ public class MainActivity extends AppCompatActivity {
         if (pref.getString("puntuaciones", "1").equals("5")) {
 
             almacen = new AlmacenPuntuacionesXML_SAX(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("6")) {
+
+            almacen = new AlmacenPuntuacionesGSon(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("7")) {
+
+            almacen = new AlmacenPuntuacionesJSon(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("8")) {
+
+            almacen = new AlmacenPuntuacionesSQLite(this);
         }
         Intent i = new Intent(this, Juego.class);
         startActivityForResult(i, ACTIV_JUEGO);
@@ -243,7 +267,8 @@ public class MainActivity extends AppCompatActivity {
             lanzarPuntuaciones(null);
         }
     }
-    public  boolean hasPermissions(Context context, String... permissions) {
+
+    public boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
