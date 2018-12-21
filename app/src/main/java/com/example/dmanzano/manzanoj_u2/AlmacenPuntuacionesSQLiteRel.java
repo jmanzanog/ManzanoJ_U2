@@ -28,7 +28,16 @@ public class AlmacenPuntuacionesSQLiteRel extends SQLiteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-// En el siguiente ejercicio se implementará este método
+        if (oldVersion == 1 && newVersion == 2) {
+            onCreate(db); //Crea las nuevas tablas
+            Cursor cursor = db.rawQuery("SELECT puntos, nombre, fecha " +
+                    "FROM puntuaciones", null); //Recorre la tabla antigua
+            while (cursor.moveToNext()) {
+                guardarPuntuacion(db, cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+            } //Crea los nuevos registros
+            cursor.close();
+            db.execSQL("DROP TABLE puntuaciones"); //Elimina tabla antigua
+        }
     }
 
     //Métodos de AlmacenPuntuaciones

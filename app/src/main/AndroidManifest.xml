@@ -21,6 +21,10 @@
         <activity android:name=".PreferenciasActivity" android:label="@string/configurar" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Puntuaciones" android:label="@string/salir"/>
         <activity android:name=".Juego" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <provider
+            android:authorities="org.example.puntuacionesprovider"
+            android:name="com.example.dmanzano.manzanoj_u2.PuntuacionesProvider"
+            android:exported="true"/>
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>
