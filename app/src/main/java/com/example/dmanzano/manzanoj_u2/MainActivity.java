@@ -87,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
             almacen = new AlmacenPuntuacionesSQLiteRel(this);
         }
+        if (pref.getString("puntuaciones", "1").equals("10")) {
+
+            almacen = new AlmacenPuntuacionesProvider(this);
+        }
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
         bSalir = findViewById(R.id.button4);
@@ -221,6 +225,10 @@ public class MainActivity extends AppCompatActivity {
         if (pref.getString("puntuaciones", "1").equals("9")) {
 
             almacen = new AlmacenPuntuacionesSQLiteRel(this);
+        }
+        if (pref.getString("puntuaciones", "1").equals("10")) {
+
+            almacen = new AlmacenPuntuacionesProvider(this);
         }
         Intent i = new Intent(this, Juego.class);
         startActivityForResult(i, ACTIV_JUEGO);
