@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -15,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;
@@ -36,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp;
     static final int ACTIV_JUEGO = 0;
     private SharedPreferences pref;
+    public static RequestQueue colaPeticiones;
+    public static ImageLoader lectorImagenes;
 
     private String[] PERMISSIONS = {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -91,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
 
             almacen = new AlmacenPuntuacionesProvider(this);
         }
+        if (pref.getString("puntuaciones", "1").equals("11")) {
+
+            almacen = new AlmacenPuntuacionesSocket();
+        }
+        if (pref.getString("puntuaciones", "1").equals("12")) {
+
+            almacen = new AlmacenPuntuacionesSW_PHP();
+        }
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
         bSalir = findViewById(R.id.button4);
@@ -130,7 +147,21 @@ public class MainActivity extends AppCompatActivity {
 
         mp = MediaPlayer.create(this, R.raw.audio);
         mp.start();
+        colaPeticiones = Volley.newRequestQueue(this);
+        lectorImagenes = new ImageLoader(colaPeticiones,
+                new ImageLoader.ImageCache() {
+                    private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(10);
 
+                    public void putBitmap(String url, Bitmap bitmap) {
+                        cache.put(url, bitmap);
+                    }
+
+                    public Bitmap getBitmap(String url) {
+                        return cache.get(url);
+                    }
+                });
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
 
     }
 
@@ -230,6 +261,14 @@ public class MainActivity extends AppCompatActivity {
 
             almacen = new AlmacenPuntuacionesProvider(this);
         }
+        if (pref.getString("puntuaciones", "1").equals("11")) {
+
+            almacen = new AlmacenPuntuacionesSocket();
+        }
+        if (pref.getString("puntuaciones", "1").equals("12")) {
+
+            almacen = new AlmacenPuntuacionesSW_PHP();
+        }
         Intent i = new Intent(this, Juego.class);
         startActivityForResult(i, ACTIV_JUEGO);
     }
@@ -276,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIV_JUEGO && resultCode == RESULT_OK && data != null) {
             int puntuacion = data.getExtras().getInt("puntuacion");
-            String nombre = "Yo";
+            String nombre = "Jose_Manzano";
 // Mejor leer nombre desde un AlertDialog.Builder o preferencias
             almacen.guardarPuntuacion(puntuacion, nombre,
                     System.currentTimeMillis());

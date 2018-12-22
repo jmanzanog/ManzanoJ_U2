@@ -12,6 +12,8 @@
         <item>Fichero SQLITE</item>
         <item>Fichero SQLiteRel</item>
         <item>Provider</item>
+        <item>Puntuaciones Socket</item>
+        <item>Puntuaciones PHP</item>
 
     </string-array>
 
@@ -43,6 +45,8 @@
         <item>8</item>
         <item>9</item>
         <item>10</item>
+        <item>11</item>
+        <item>12</item>
 
     </string-array>
     <string-array name="tiposSensorValores">

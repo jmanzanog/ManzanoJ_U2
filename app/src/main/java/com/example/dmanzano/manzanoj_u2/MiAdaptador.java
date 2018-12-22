@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.List;
 
 public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
@@ -34,7 +37,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
         holder.titulo.setText(lista.get(i));
-        switch (Math.round((float) Math.random() * 3)) {
+        /*switch (Math.round((float) Math.random() * 3)) {
             case 0:
                 holder.icon.setImageResource(R.drawable.asteroide1);
                 break;
@@ -44,7 +47,9 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
             default:
                 holder.icon.setImageResource(R.drawable.asteroide3);
                 break;
-        }
+        }*/
+        // MainActivity.lectorImagenes.get("http://mmoviles.upv.es/img/moviles.png", ImageLoader.getImageListener(holder.icon, R.drawable.asteroide1, R.drawable.asteroide3));
+        holder.icon.setImageUrl("http://mmoviles.upv.es/img/moviles.png", MainActivity.lectorImagenes);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titulo, subtitutlo;
-        public ImageView icon;
+        public NetworkImageView icon;
 
         ViewHolder(View itemView) {
             super(itemView);
