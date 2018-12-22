@@ -108,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
             almacen = new AlmacenPuntuacionesSW_PHP();
         }
+        if (pref.getString("puntuaciones", "1").equals("13")) {
+
+            almacen = new AlmacenPuntuacionesSW_PHP_AsyncTask(this);
+        }
         textView = (TextView) findViewById(R.id.textView2);
         bAcercaDe = findViewById(R.id.button3);
         bSalir = findViewById(R.id.button4);
@@ -268,6 +272,10 @@ public class MainActivity extends AppCompatActivity {
         if (pref.getString("puntuaciones", "1").equals("12")) {
 
             almacen = new AlmacenPuntuacionesSW_PHP();
+        }
+        if (pref.getString("puntuaciones", "1").equals("13")) {
+
+            almacen = new AlmacenPuntuacionesSW_PHP_AsyncTask(this);
         }
         Intent i = new Intent(this, Juego.class);
         startActivityForResult(i, ACTIV_JUEGO);
